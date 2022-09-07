@@ -1,0 +1,282 @@
+#: import SwapTransition kivy.uix.screenmanager.SwapTransition
+
+<UI>:
+    transition: SwapTransition()
+    MDScreen:
+        name: 'login'
+        md_bg_color: 177/255, 149/255, 187/255,1
+        MDBoxLayout:
+            orientation: 'vertical'
+            spacing: dp(12)
+            padding: dp(12)
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint_y: 0.3
+                Image:
+                    source: 'loginsrc/logo.png'
+                    pos_hint: {'center_x': 0.5}
+                MDLabel:
+                    text: "Iniciar Sesión"
+                    halign: 'center'
+                    color: '#b195bb'
+                    font_size:dp(28)
+                    bold: True
+                    pos_hint: {'center_y': 0.5}
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint_y: 0.3
+                spacing: dp(12)
+                MDTextField:
+                    id:user
+                    hint_text: "Nombre de Usuario"
+                    icon_right: "account"
+                    font_size: dp(20)
+                    icon_right_color: '#b195bb'
+                    pos_hint: {'center_x': 0.5}
+                MDTextField:
+                    id: password
+                    password: True
+                    icon_right: "key-variant"
+                    icon_right_color: '#b195bb'
+                    hint_text: "Contraseña"
+                    font_size: dp(20)
+                    pos_hint: {'center_x': 0.5}
+
+                MDLabel:
+                    id: signal_login
+                    text: '' #Datos incorrectos
+                    halign: 'center'
+                    color: '#b195bb'
+                    font_size: dp(15)
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint_y: 0.4
+                spacing: dp(15)
+                MDFillRoundFlatButton:
+                    id: bt_ingresar
+                    text: 'Ingresar'
+                    pos_hint: {'center_x': 0.5}
+                    on_release:
+                        x = app.login_data()
+                        root.current = 'login_screen' if x == True else None
+                MDFillRoundFlatButton:
+                    md_bg_color: "#000000"
+                    text_color: 177/255, 149/255, 187/255,1
+                    text: 'Crear Cuenta'
+                    font_size: dp(15)
+                    pos_hint: {'center_x': 0.5}
+                    on_release: root.current = 'reg_screen'
+                MDFillRoundFlatButton:
+                    md_bg_color: "#000000"
+                    text_color: 177/255, 149/255, 187/255,1
+                    text: 'Ingresar como Invitado'
+                    font_size: dp(10)
+                    pos_hint: {'center_x': 0.5}
+                    on_release: root.current = 'screen_main'
+
+#Pantalla de Login ################
+    MDScreen:
+        name: 'login_screen'
+        md_bg_color: 177/255, 149/255, 187/255,1
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: dp(12)
+            spacing: dp(12)
+            MDFloatingActionButton:
+                icon: 'arrow-left'
+                color_icon: '#000000'
+                on_release: root.current = 'login'
+    
+        Widget:
+            id: btn
+            size_hint_y: None
+            height: 80
+        
+        MDTextFieldRect:
+            id: fld
+            pos_hint: {'center_x': 0.5,'center_y': 0.9}
+            multiline: False
+            size_hint: (0.9, 0.05)
+
+        MDIconButton:
+            icon: 'magnify'
+            pos_hint: {'center_x': 0.9,'center_y': 0.9}
+            on_release: app.search(fld.text)
+
+        MDLabel:
+            id: error
+            halign: 'center'
+            pos_hint: {'center_y': 0.5}
+
+        MDSpinner:
+            id: rc_spin
+            size_hint: None, None
+            size: dp(46), dp(46)
+            pos_hint: {'center_x': 0.5,'center_y': 0.5}
+            active: False
+
+        MDBoxLayout:
+            orientation: 'vertical'
+
+            ScrollView:
+
+                height: root.height - btn.height
+                size_hint_y: None
+
+                MDList:
+
+                    MDLabel:
+                        id: title
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                        bold: True
+                        halign: 'center'
+
+                    MDLabel:
+                        id: summary
+                        size_hint_y: None
+                        height: self.texture_size[1]
+
+#Pantalla de Registro ################
+    MDScreen:
+        name: 'reg_screen'
+        md_bg_color: 0,0,0,1
+
+        MDBoxLayout:
+            orientation: 'vertical'
+            padding: dp(12)
+            spacing: dp(12)
+            MDBoxLayout:
+                orientation: 'horizontal'
+                size_hint: 1, 0.2
+                MDFloatingActionButton:
+                    icon:'arrow-left'
+                    pos_hint: {'center_y': 0.5}
+                    on_release:
+                        root.current = 'login'
+                        app.clear_signal()
+
+                MDLabel:
+                    text: "Crear Cuenta"
+                    halign: 'center'
+                    color: '#b195bb'
+                    font_size: dp(28)
+                    bold: True
+                    pos_hint: {'center_y': 0.5}
+            
+            MDBoxLayout:
+                orientation: 'vertical'
+                size_hint: 1, 0.7
+            MDLabel:
+                text: "Nombre de Usuario"
+                halign: 'center'
+                color: '#b195bb'
+                font_size: dp(20)
+            MDTextField:
+                id: new_user
+                hint_text: "Usuario"
+                icon_right: "account"
+                font_size: dp(20)
+                icon_right_color: '#b195bb'
+                pos_hint: {'center_x': 0.5,}
+            MDLabel:
+                text: "Ingrese su Contraseña"
+                halign: 'center'
+                color: '#b195bb'
+                font_size: dp(20)
+            MDTextField:
+                id: new_password
+                password: True
+                icon_right: "key-variant"
+                icon_right_color: '#b195bb'
+                hint_text: "Contraseña"
+                font_size: dp(20)
+                pos_hint: {'center_x': 0.5}
+            MDLabel:
+                text: "Confirme su Contraseña"
+                halign: 'center'
+                color: '#b195bb'
+                font_size: dp(20)
+            MDTextField:
+                id: new_password_two
+                password: True
+                icon_right: "key-variant"
+                icon_right_color: '#b195bb'
+                hint_text: "Confirmar Contraseña"
+                font_size: dp(20)
+                pos_hint: {'center_x': 0.5}
+        MDBoxLayout:
+            orientation: 'vertical'
+            size_hint: 1, 0.3
+            MDLabel:
+                id: signal_register
+                text: ''
+                color: '#b195bb'
+                font_size: dp(15)
+
+            MDFillRoundFlatButton:
+                id: bt_register
+                text: 'Registrarse'
+                pos_hint: {'center_x': 0.5,'center_y': 0.5}
+                on_release: app.register_data()
+
+#Pantalla Principal (Sin Login) ################
+    MDScreen:
+        name: 'screen_main'
+        md_bg_color: 177/255, 149/255, 187/255,1
+        Widget:
+            id: btn
+            size_hint_y: None
+            height: 80
+        
+        MDTextFieldRect:
+            id: fld
+            pos_hint: {'center_x': 0.5,'center_y': 0.9}
+            multiline: False
+            size_hint: (0.9, 0.05)
+
+        MDIconButton:
+            icon: 'magnify'
+            pos_hint: {'center_x': 0.9,'center_y': 0.9}
+            on_release: app.search(fld.text)
+
+        MDLabel:
+            id: error
+            halign: 'center'
+            pos_hint: {'center_y': 0.5}
+
+        MDSpinner:
+            id: rc_spin
+            size_hint: None, None
+            size: dp(46), dp(46)
+            pos_hint: {'center_x': 0.5,'center_y': 0.5}
+            active: False
+
+        MDBoxLayout:
+            orientation: 'vertical'
+
+            ScrollView:
+
+                height: root.height - btn.height
+                size_hint_y: None
+
+                MDList:
+
+                    MDLabel:
+                        id: title
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                        bold: True
+                        halign: 'center'
+
+                    MDLabel:
+                        id: summary
+                        size_hint_y: None
+                        height: self.texture_size[1]
+
+        MDFloatingActionButton:
+            icon: 'arrow-left'
+            color_icon: '#000000'
+            on_release: root.current = 'login'
+        
